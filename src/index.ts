@@ -1,15 +1,14 @@
 import {GraphQLServer} from 'graphql-yoga'
-import { PrismaClient } from '@prisma/client'
 import {types as typeDefs, resolvers} from './graphql'
+import { Request, Context, prisma} from './utils'
 
-const prisma = new PrismaClient()
 
 const server: GraphQLServer = new GraphQLServer({
     typeDefs,
     resolvers,
-    context: (request): object => {
+    context: (request: Request): Context => {
         return {
-            ...request,
+            request,
             prisma
         }
     }

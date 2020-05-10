@@ -7,7 +7,6 @@ type User {
 
 
 type Query {
-  getRadomUser: User!
   getUser(id: ID): [User!]!
 }
 
@@ -16,6 +15,7 @@ type Mutation {
     createUser(data: createUserInput!): User!
     updateUser(id: ID! data: updateUserInput!): User!
     deleteUser(id: ID!): User!
+    selectWinner: User!
 }
 
 

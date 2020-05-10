@@ -13,4 +13,5 @@ model users {
   created_at DateTime? @default(now())
   id         Int       @default(autoincrement()) @id
   nombre     String
+  winner     Int?      @default(0)
 }
