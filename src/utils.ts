@@ -1,9 +1,13 @@
 import { PrismaClient } from '@prisma/client'
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export const prisma = new PrismaClient()
-const SECRET: string = <string>process.env.SECRET
+const SECRET: string = <string>process.env.SECRET_JWT
 
+console.log(process.env.SECRET_JWT)
 export interface Request {
     get(param: string): string;
 }
@@ -23,6 +27,12 @@ export interface Context {
 }
 
 
+export interface Auth {
+    data : {
+        user: string
+        password: string
+    }
+}
 
 /**
  * return jwt token
