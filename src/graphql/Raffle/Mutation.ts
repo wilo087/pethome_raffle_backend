@@ -1,4 +1,5 @@
-import { User, Context} from '../../utils'
+import { User, Context, generateToken} from '../../utils'
+import bcrypt from 'bcrypt'
 
 /**
  * this function create user
@@ -78,6 +79,36 @@ async function selectWinner(parent: object, args: User, ctx: Context): Promise<U
 
 }
 
+/**
+ * login function
+ * return user authorized
+ * @param parent 
+ * @param args 
+ * @param ctx 
+ */
+async function login (parent: object, args: {user: string, password: string}, ctx: Context): Promise<string> {
+  const {user, password} = args
+  const {prisma} = ctx
+  
+  const auth = await prisma.auth.findOne({
+      where:{
+          user
+      }
+  })
+
+  if(!auth)
+    throw new Error('Invalid Credentials')
+  
+  const isAuth = await bcrypt.compare(password, auth.password)
+
+  if(!isAuth)
+    throw new Error('Invalid Credentials')
+
+    const token: string = generateToken(auth.user)
+
+    return token
+}
+
 export const Mutation = {
-    createUser, updateUser, deleteUser, selectWinner
+    createUser, updateUser, deleteUser, selectWinner, login
 }

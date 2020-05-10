@@ -11,3 +11,10 @@ CREATE TABLE users (
  winner INT(11) DEFAULT 0,
  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+
+create table auth (
+ id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+ user VARCHAR(100) NOT NULL,
+ password VARCHAR(100) NOT NULL
+);

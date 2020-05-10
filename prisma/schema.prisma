@@ -7,6 +7,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model auth {
+  id       Int    @default(autoincrement()) @id
+  password String
+  user     String @unique
+}
+
 model users {
   cedula     Int
   codigo     Int
