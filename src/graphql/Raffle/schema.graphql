@@ -8,6 +8,7 @@ type User {
 
 type Query {
   getUser(id: ID): [User!]!
+  getAllWinner: [User!]!
 }
 
 
