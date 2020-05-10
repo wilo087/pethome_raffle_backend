@@ -8,7 +8,7 @@ type User {
 
 type Query {
   getRadomUser: User!
-  getUser(id: ID)[User!]!
+  getUser(id: ID): [User!]!
 }
 
 
