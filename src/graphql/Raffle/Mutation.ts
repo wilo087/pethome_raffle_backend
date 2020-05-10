@@ -86,23 +86,23 @@ async function selectWinner(parent: object, args: User, ctx: Context): Promise<U
  * @param args 
  * @param ctx 
  */
-async function login (parent: object, args: {user: string, password: string}, ctx: Context): Promise<string> {
-  const {user, password} = args
-  const {prisma} = ctx
+async function login (parent: object, args: {user: string; password: string}, ctx: Context): Promise<string> {
+    const {user, password} = args
+    const {prisma} = ctx
   
-  const auth = await prisma.auth.findOne({
-      where:{
-          user
-      }
-  })
+    const auth = await prisma.auth.findOne({
+        where:{
+            user
+        }
+    })
 
-  if(!auth)
-    throw new Error('Invalid Credentials')
+    if(!auth)
+        throw new Error('Invalid Credentials')
   
-  const isAuth = await bcrypt.compare(password, auth.password)
+    const isAuth = await bcrypt.compare(password, auth.password)
 
-  if(!isAuth)
-    throw new Error('Invalid Credentials')
+    if(!isAuth)
+        throw new Error('Invalid Credentials')
 
     const token: string = generateToken(auth.user)
 

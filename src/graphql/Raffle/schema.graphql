@@ -9,7 +9,7 @@ type AuthPayload {
     token: String!
 }
 
-type inputLogin {
+input inputLogin {
     user: String!
     password: String!
 }

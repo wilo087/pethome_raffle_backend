@@ -14,11 +14,11 @@ function getUser(parent: object, args: User, ctx: Context): User {
     if(!id)
         return prisma.users.findMany()
    
-  return prisma.users.findOne({
-      where:{
-          id: Number(id)
-      }
-  })
+    return prisma.users.findOne({
+        where:{
+            id: Number(id)
+        }
+    })
 }
 
 /**

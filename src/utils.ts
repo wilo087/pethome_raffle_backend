@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import jwt from 'jsonwebtoken'
 
 export const prisma = new PrismaClient()
-const SECRET : string = <string>process.env.SECRET
+const SECRET: string = <string>process.env.SECRET
 
 export interface Request {
     get(param: string): string;
@@ -28,6 +28,6 @@ export interface Context {
  * return jwt token
  * @param user 
  */
-export function generateToken ( user: string ) : string {
- return jwt.sign({user}, SECRET)
+export function generateToken ( user: string ): string {
+    return jwt.sign({user}, SECRET)
 }
