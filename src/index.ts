@@ -1,7 +1,15 @@
 import {GraphQLServer} from 'graphql-yoga'
 import {types as typeDefs, resolvers} from './graphql'
-import { Request, Context, prisma} from './utils'
+import { Request, Context, prisma, isAuth, Option} from './utils'
 
+
+
+const options: Option =  {
+    port: Number(process.env.GRAPHQL_PORT),
+    endpoint: String(process.env.GRAPHQL_PLAYGROUND),
+    playground: String(process.env.GRAPHQL_PLAYGROUND),
+    debug: Boolean(process.env.DEBUG)
+}
 
 const server: GraphQLServer = new GraphQLServer({
     typeDefs,
@@ -14,6 +22,9 @@ const server: GraphQLServer = new GraphQLServer({
     }
 })
 
-server.start(({ port }): void => {
+
+
+server.start(options, ({port}): void => {
     console.log(`Server Running on http://localhost:${port}`)
 })
+
