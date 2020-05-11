@@ -61,6 +61,7 @@ export function isAuth(token: string): string | object {
     throw new Error('Unauthorized')
 
   token = token.replace('Bearer', '')
-  const data = jwt.verify(token, SECRET)
+  
+  const data = jwt.verify(token.trim(), SECRET)
   return data
 }

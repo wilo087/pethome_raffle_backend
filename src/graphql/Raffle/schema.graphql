@@ -15,15 +15,15 @@ input inputLogin {
 }
 
 type Query {
-  getUser(id: ID): [User!]!
+  getUser(id: ID): [User!]! @isAuthenticated
   getAllWinner: [User!]! @isAuthenticated
 }
 
 
 type Mutation {
     createUser(data: createUserInput!): User! @isAuthenticated
-    updateUser(id: ID! data: updateUserInput!): User!
-    deleteUser(id: ID!): User!
+    updateUser(id: ID! data: updateUserInput!): User! @isAuthenticated
+    deleteUser(id: ID!): User! @isAuthenticated
     selectWinner: User! @isAuthenticated
     login(data: inputLogin!): AuthPayload!
 }
