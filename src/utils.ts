@@ -50,17 +50,18 @@ export function generateToken(user: string): string {
 }
 
 /**
- * check if user is auth
+ * Checks if user is authenticated
  * @param req 
  * @param res 
  * @param next 
  */
 export function isAuth(token: string): string | object {
 
-  if (!token)
+  if (!token) {
     throw new Error('Unauthorized')
+  }
 
   token = token.replace('Bearer', '')
 
-  return jwt.verify(token, SECRET)
+  return jwt.verify(token.trim(), SECRET)
 }

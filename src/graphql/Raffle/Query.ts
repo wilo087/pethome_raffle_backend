@@ -12,8 +12,9 @@ export const Query = {
     const { prisma } = ctx
     const { id } = args
 
-    if (!id)
+    if (!id) {
       return prisma.users.findMany()
+    }
 
     return prisma.users.findOne({
       where: {

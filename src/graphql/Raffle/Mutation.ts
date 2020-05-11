@@ -51,11 +51,7 @@ export const Mutation = {
     const { prisma } = ctx
     const { id } = args
 
-    return prisma.users.delete({
-      where: {
-        id: Number(id)
-      }
-    })
+    return prisma.users.delete({ where: { id: Number(id) } })
   },
 
   /**
@@ -75,12 +71,8 @@ export const Mutation = {
     LIMIT 1;`
 
     return prisma.users.update({
-      where: {
-        id: Number(userWinner[0].id)
-      },
-      data: {
-        winner: 1
-      }
+      where: { id: Number(userWinner[0].id) },
+      data: { winner: 1 }
     })
 
   },
@@ -96,11 +88,7 @@ export const Mutation = {
     const { user, password } = args.data
     const { prisma } = ctx
 
-    const auth = await prisma.auth.findOne({
-      where: {
-        user
-      }
-    })
+    const auth = await prisma.auth.findOne({ where: { user } })
 
     if (!auth) {
       throw new Error('Invalid Credentials')
