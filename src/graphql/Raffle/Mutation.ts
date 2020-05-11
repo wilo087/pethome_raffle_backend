@@ -21,7 +21,7 @@ async function createUser(parent: object, args: User, ctx: Context): Promise<Use
     return userCreated
   }catch(e){
     if(e.code === 'P2002')
-      throw Error(`El campo ${e.meta.targe} ya existe`)
+      throw Error(`El campo ${e.meta.target} ya existe`)
         
     throw Error ('Ocurrio un error')
   }
