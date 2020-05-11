@@ -8,19 +8,15 @@ export const Query = {
    * @param args 
    * @param ctx 
    */
-  getUser(_: object, args: User, ctx: Context): User {
-    const { prisma } = ctx
-    const { id } = args
+  getUser(_: void, args: User, ctx: Context): User {
+    const { prisma } = ctx;
+    const { id } = args;
 
     if (!id) {
-      return prisma.users.findMany()
+      return prisma.users.findMany();
     }
 
-    return prisma.users.findOne({
-      where: {
-        id: Number(id)
-      }
-    })
+    return prisma.users.findOne({ where: { id: Number(id) } });
   },
 
   /**
@@ -30,14 +26,10 @@ export const Query = {
   * @param args 
   * @param ctx 
   */
-  getAllWinner(_: object, args: User, ctx: Context): User {
-    const { prisma } = ctx
+  getAllWinner(_: void, args: User, ctx: Context): User {
+    const { prisma } = ctx;
 
-    return prisma.users.findMany({
-      where: {
-        winner: 1
-      }
-    })
+    return prisma.users.findMany({ where: { winner: 1 } });
   }
 
 }

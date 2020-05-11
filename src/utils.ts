@@ -1,11 +1,11 @@
-import { PrismaClient } from '@prisma/client'
-import jwt from 'jsonwebtoken'
-import dotenv from 'dotenv'
+import { PrismaClient } from '@prisma/client';
+import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
-export const prisma = new PrismaClient()
-const SECRET: string = process.env.SECRET_JWT as string
+export const prisma = new PrismaClient();
+const SECRET: string  = process.env.SECRET_JWT as string;
 
 export interface Request {
   get(param: string): string;
@@ -46,22 +46,20 @@ export interface Option {
  * @param user 
  */
 export function generateToken(user: string): string {
-  return jwt.sign({ user }, SECRET, { expiresIn: '24h' })
+  return jwt.sign({ user }, SECRET, { expiresIn: '24h' });
 }
 
 /**
  * Checks if user is authenticated
- * @param req 
- * @param res 
- * @param next 
+ * @param token @string
  */
 export function isAuth(token: string): string | object {
 
   if (!token) {
-    throw new Error('Unauthorized')
+    throw new Error('Unauthorized');
   }
 
-  token = token.replace('Bearer', '')
+  token = token.replace('Bearer', '');
 
-  return jwt.verify(token.trim(), SECRET)
+  return jwt.verify(token.trim(), SECRET);
 }

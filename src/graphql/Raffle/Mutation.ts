@@ -8,17 +8,17 @@ export const Mutation = {
  * @param args 
  * @param ctx 
  */
-  createUser(_: object, args: User, ctx: Context): User {
-    const { prisma } = ctx
-    const { data } = args
+  createUser(_: void, args: User, ctx: Context): User {
+    const { prisma } = ctx;
+    const { data } = args;
 
     try {
-      return prisma.users.create({ data })
+      return prisma.users.create({ data });
     } catch (e) {
       if (e.code === 'P2002') {
-        throw Error(`field ${e.meta.target} already exist`)
+        throw Error(`field ${e.meta.target} already exist`);
       }
-      throw Error('an error occurred')
+      throw Error('an error occurred');
     }
 
   },
@@ -29,14 +29,14 @@ export const Mutation = {
  * @param args 
  * @param ctx 
  */
-  updateUser(_: object, args: User, ctx: Context): User {
-    const { prisma } = ctx
-    const { id, data } = args
+  updateUser(_: void, args: User, ctx: Context): User {
+    const { prisma } = ctx;
+    const { id, data } = args;
 
     return prisma.users.update({
       where: { id: Number(id) },
       data
-    })
+    });
 
   },
 
@@ -47,11 +47,11 @@ export const Mutation = {
  * @param args 
  * @param ctx 
  */
-  deleteUser(_: object, args: User, ctx: Context): User {
-    const { prisma } = ctx
-    const { id } = args
+  deleteUser(_: void, args: User, ctx: Context): User {
+    const { prisma } = ctx;
+    const { id } = args;
 
-    return prisma.users.delete({ where: { id: Number(id) } })
+    return prisma.users.delete({ where: { id: Number(id) } });
   },
 
   /**
@@ -61,19 +61,19 @@ export const Mutation = {
  * @param args 
  * @param ctx 
  */
-  async selectWinner(_: object, args: User, ctx: Context): Promise<User> {
-    const { prisma } = ctx
+  async selectWinner(_: void, args: User, ctx: Context): Promise<User> {
+    const { prisma } = ctx;
 
     // Query to get user random
     const userWinner: [User] = await prisma.raw<User>`SELECT *FROM users
     WHERE winner = 0 
     ORDER BY RAND()
-    LIMIT 1;`
+    LIMIT 1;`;
 
     return prisma.users.update({
       where: { id: Number(userWinner[0].id) },
       data: { winner: 1 }
-    })
+    });
 
   },
 
@@ -84,23 +84,23 @@ export const Mutation = {
  * @param args 
  * @param ctx 
  */
-  async login(_: object, args: Auth, ctx: Context): Promise<string> {
-    const { user, password } = args.data
-    const { prisma } = ctx
+  async login(_: void, args: Auth, ctx: Context): Promise<string> {
+    const { user, password } = args.data;
+    const { prisma } = ctx;
 
-    const auth = await prisma.auth.findOne({ where: { user } })
+    const auth = await prisma.auth.findOne({ where: { user } });
 
     if (!auth) {
-      throw new Error('Invalid Credentials')
+      throw new Error('Invalid Credentials');
     }
 
-    const isAuth = await bcrypt.compare(password, auth.password)
+    const isAuth = await bcrypt.compare(password, auth.password);
 
     if (!isAuth) {
-      throw new Error('Invalid Credentials')
+      throw new Error('Invalid Credentials');
     }
 
-    return generateToken(auth.user)
+    return generateToken(auth.user);
 
   }
 
