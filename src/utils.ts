@@ -8,12 +8,9 @@ export const prisma = new PrismaClient()
 const SECRET: string = process.env.SECRET_JWT as string
 
 export interface Request {
-    get?(param: string): string;
+    get(param: string): string;
 }
 
-type Req  = {
-    request: {headers: {authorization: string}};
-}
 
 export interface User {
     id?: number;
@@ -58,7 +55,7 @@ export function generateToken ( user: string ): string {
  * @param res 
  * @param next 
  */
-export function isAuth(req: Req): string | object {
+export function isAuth(req: any): string | object {
     
     let token = req.request.headers.authorization
 
