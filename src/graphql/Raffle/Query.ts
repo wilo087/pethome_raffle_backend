@@ -1,44 +1,42 @@
-import { User, Context} from '../../utils'
-
-/**
- * return all user
- * or specific user
- * @param parent 
- * @param args 
- * @param ctx 
- */
-function getUser(parent: object, args: User, ctx: Context): User {
-  const {prisma} = ctx
-  const {id} = args
-
-  if(!id)
-    return prisma.users.findMany()
-   
-  return prisma.users.findOne({
-    where:{
-      id: Number(id)
-    }
-  })
-}
-
-/**
- * return all
- * users winner
- * @param parent 
- * @param args 
- * @param ctx 
- */
-function getAllWinner(parent: object, args: User, ctx: Context): User {
-  const {prisma} = ctx
-    
-  return prisma.users.findMany({
-    where:{
-      winner: 1
-    }
-  })
-}
-
+import { User, Context } from '../../utils'
 
 export const Query = {
-  getUser, getAllWinner
+  /**
+   * return all user
+   * or specific user
+   * @param parent 
+   * @param args 
+   * @param ctx 
+   */
+  getUser(_: object, args: User, ctx: Context): User {
+    const { prisma } = ctx
+    const { id } = args
+
+    if (!id)
+      return prisma.users.findMany()
+
+    return prisma.users.findOne({
+      where: {
+        id: Number(id)
+      }
+    })
+  },
+
+  /**
+  * return all
+  * users winner
+  * @param parent 
+  * @param args 
+  * @param ctx 
+  */
+  getAllWinner(_: object, args: User, ctx: Context): User {
+    const { prisma } = ctx
+
+    return prisma.users.findMany({
+      where: {
+        winner: 1
+      }
+    })
+  }
+
 }

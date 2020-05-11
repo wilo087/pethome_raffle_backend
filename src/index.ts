@@ -1,10 +1,10 @@
-import {ApolloServer} from 'apollo-server'
-import {types as typeDefs, resolvers} from './graphql'
-import {prisma, Option} from './utils'
-import  IsAuthenticatedDirective  from './Directives'
+import { ApolloServer } from 'apollo-server'
+import { types as typeDefs, resolvers } from './graphql'
+import { prisma, Option } from './utils'
+import IsAuthenticatedDirective from './Directives'
 
 
-const options: Option =  {
+const options: Option = {
   port: Number(process.env.GRAPHQL_PORT),
   endpoint: String(process.env.GRAPHQL_PLAYGROUND),
   playground: String(process.env.GRAPHQL_PLAYGROUND),
@@ -18,16 +18,11 @@ const server = new ApolloServer({
   schemaDirectives: {
     isAuthenticated: IsAuthenticatedDirective
   },
-  context: (request): object => {
-    return {
-      request,
-      prisma
-    }
-  },
+  context: (request): object => ({ request, prisma }),
 });
 
-server.listen( options.port ).then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`);
+server.listen(options.port).then(({ url }) => {
+  console.log(`Server ready at ${url}`);
 });
 
 
