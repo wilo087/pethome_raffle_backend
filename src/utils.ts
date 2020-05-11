@@ -54,17 +54,14 @@ export function generateToken ( user: string ): string {
  * @param res 
  * @param next 
  */
-export function isAuth(req: Request, res: unknown, next: CallableFunction): CallableFunction | void {
+export function isAuth(req: any): string | object {
     
-    let token = req.get('Authorization')
+    let token = req.request.headers.authorization
 
     if(!token)
         throw new Error('Unauthorized')
 
     token = token.replace('Bearer', '')
-    jwt.verify(token, SECRET, function(err){
-        if(err) throw new Error('Unauthorized')
-
-        return next()
-    })
+    const data = jwt.verify(token, SECRET)
+    return data
 }

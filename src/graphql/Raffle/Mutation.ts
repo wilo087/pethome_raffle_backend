@@ -1,4 +1,4 @@
-import { User, Context, generateToken, Auth} from '../../utils'
+import { User, Context, generateToken, Auth, isAuth} from '../../utils'
 import bcrypt from 'bcrypt'
 
 /**
@@ -8,8 +8,10 @@ import bcrypt from 'bcrypt'
  * @param ctx 
  */
 function createUser(parent: object, args: User, ctx: Context): User {
-    const {prisma} = ctx
+    const {prisma, request} = ctx
     const {data} = args
+    
+    isAuth(request)
 
     return prisma.users.create({
         data
@@ -23,8 +25,10 @@ function createUser(parent: object, args: User, ctx: Context): User {
  * @param ctx 
  */
 function updateUser(parent: object, args: User, ctx: Context): User {
-    const {prisma} = ctx
+    const {prisma, request} = ctx
     const {id, data} = args
+
+    isAuth(request)
 
     return prisma.users.update({
         where:{
@@ -43,8 +47,10 @@ function updateUser(parent: object, args: User, ctx: Context): User {
  * @param ctx 
  */
 function deleteUser (parent: object, args: User, ctx: Context): User {
-    const {prisma} = ctx
+    const {prisma, request} = ctx
     const {id} = args
+
+    isAuth(request)
 
     return prisma.users.delete({
         where: {
@@ -61,8 +67,11 @@ function deleteUser (parent: object, args: User, ctx: Context): User {
  * @param ctx 
  */
 async function selectWinner(parent: object, args: User, ctx: Context): Promise<User> {
-    const {prisma} = ctx
+    const {prisma, request} = ctx
 
+    isAuth(request)
+  
+    // Query to get user random
     const userWinner: [User] = await prisma.raw<User>`SELECT *FROM users
     WHERE winner = 0 
     ORDER BY RAND()

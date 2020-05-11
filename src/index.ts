@@ -1,6 +1,6 @@
 import {GraphQLServer} from 'graphql-yoga'
 import {types as typeDefs, resolvers} from './graphql'
-import { Request, Context, prisma, isAuth, Option} from './utils'
+import { Request, Context, prisma, Option} from './utils'
 
 
 
