@@ -7,15 +7,25 @@ import bcrypt from 'bcrypt'
  * @param args 
  * @param ctx 
  */
-function createUser(parent: object, args: User, ctx: Context): User {
+async function createUser(parent: object, args: User, ctx: Context): Promise<User> {
     const {prisma, request} = ctx
     const {data} = args
     
     isAuth(request)
 
-    return prisma.users.create({
-        data
-    })
+    try {
+        const userCreated =  await prisma.users.create({
+            data
+        })
+
+        return userCreated
+    }catch(e){
+        if(e.code === 'P2002')
+            throw Error(`El campo ${e.meta.targe} ya existe`)
+        
+        throw Error ('Ocurrio un error')
+    }
+   
 }
 
 /**
@@ -99,13 +109,14 @@ async function login (parent: object, args: Auth, ctx: Context): Promise<object>
     const {user, password} = args.data
     const {prisma} = ctx
   
+
     const auth = await prisma.auth.findOne({
         where:{
             user
         }
     })
 
-    if(!auth)
+    if(!auth || auth == null)
         throw new Error('Invalid Credentials')
   
     const isAuth = await bcrypt.compare(password, auth.password)
@@ -114,10 +125,11 @@ async function login (parent: object, args: Auth, ctx: Context): Promise<object>
         throw new Error('Invalid Credentials')
 
     const token: string = generateToken(auth.user)
-    
     return {
         token
     }
+    
+   
 }
 
 export const Mutation = {

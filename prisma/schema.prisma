@@ -14,8 +14,8 @@ model auth {
 }
 
 model users {
-  cedula     Int
-  codigo     Int
+  cedula     Int       @unique
+  codigo     Int       @unique
   created_at DateTime? @default(now())
   id         Int       @default(autoincrement()) @id
   nombre     String
