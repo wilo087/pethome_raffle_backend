@@ -55,9 +55,7 @@ export function generateToken ( user: string ): string {
  * @param res 
  * @param next 
  */
-export function isAuth(req: any): string | object {
-    
-  let token = req.request.headers.authorization
+export function isAuth(token: string): string | object {
 
   if(!token)
     throw new Error('Unauthorized')

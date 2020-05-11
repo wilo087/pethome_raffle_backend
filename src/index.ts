@@ -1,7 +1,7 @@
-import {GraphQLServer} from 'graphql-yoga'
+import {ApolloServer} from 'apollo-server'
 import {types as typeDefs, resolvers} from './graphql'
-import { Request, Context, prisma, Option} from './utils'
-
+import {prisma, Option} from './utils'
+import  IsAuthenticatedDirective  from './Directives'
 
 
 const options: Option =  {
@@ -11,20 +11,23 @@ const options: Option =  {
   debug: Boolean(process.env.DEBUG)
 }
 
-const server: GraphQLServer = new GraphQLServer({
+
+const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: (request: Request): Context => {
+  schemaDirectives: {
+    isAuthenticated: IsAuthenticatedDirective
+  },
+  context: (request): object => {
     return {
       request,
       prisma
     }
-  }
-})
+  },
+});
 
+server.listen( options.port ).then(({ url }) => {
+  console.log(`🚀  Server ready at ${url}`);
+});
 
-
-server.start(options, ({port}): void => {
-  console.log(`Server Running on http://localhost:${port}`)
-})
 

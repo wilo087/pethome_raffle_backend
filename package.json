@@ -15,28 +15,29 @@
     "dev": "NODE_ENV=development nodemon",
     "prod": "NODE_ENV=producction npm-run-all remove build copy-gql server"
   },
-"dependencies": {
-  "@prisma/client": "^2.0.0-beta.3",
-  "bcrypt": "^4.0.1",
-  "dotenv": "^8.2.0",
-  "graphql-tools": "^5.0.0",
-  "graphql-yoga": "^1.18.3",
-  "jsonwebtoken": "^8.5.1",
-  "merge-graphql-schemas": "^1.7.8"
-},
-"devDependencies": {
-  "@prisma/cli": "^2.0.0-beta.4",
-  "@types/bcrypt": "^3.0.0",
-  "@types/jsonwebtoken": "^8.3.9",
-  "@types/node": "^13.13.2",
-  "@types/ws": "^7.2.4",
-  "@typescript-eslint/eslint-plugin": "^2.29.0",
-  "@typescript-eslint/parser": "^2.29.0",
-  "eslint": "^6.8.0",
-  "nodemon": "^2.0.3",
-  "npm-run-all": "^4.1.5",
-  "ts-node": "^8.9.0",
-  "typescript": "^3.8.3",
-  "webpack-graphql-loader": "^1.0.2"
-}
+  "dependencies": {
+    "@prisma/client": "^2.0.0-beta.3",
+    "apollo-server": "^2.13.0",
+    "bcrypt": "^4.0.1",
+    "dotenv": "^8.2.0",
+    "graphql": "^15.0.0",
+    "graphql-tools": "^5.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "merge-graphql-schemas": "^1.7.8"
+  },
+  "devDependencies": {
+    "@prisma/cli": "^2.0.0-beta.4",
+    "@types/bcrypt": "^3.0.0",
+    "@types/jsonwebtoken": "^8.3.9",
+    "@types/node": "^13.13.2",
+    "@types/ws": "^7.2.4",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.3",
+    "npm-run-all": "^4.1.5",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3",
+    "webpack-graphql-loader": "^1.0.2"
+  }
 }

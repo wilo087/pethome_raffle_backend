@@ -16,15 +16,15 @@ input inputLogin {
 
 type Query {
   getUser(id: ID): [User!]!
-  getAllWinner: [User!]!
+  getAllWinner: [User!]! @isAuthenticated
 }
 
 
 type Mutation {
-    createUser(data: createUserInput!): User!
+    createUser(data: createUserInput!): User! @isAuthenticated
     updateUser(id: ID! data: updateUserInput!): User!
     deleteUser(id: ID!): User!
-    selectWinner: User!
+    selectWinner: User! @isAuthenticated
     login(data: inputLogin!): AuthPayload!
 }
 
@@ -41,3 +41,5 @@ input updateUserInput {
     codigo: Int
     cedula: Int
 }
+
+directive @isAuthenticated on QUERY | FIELD | FIELD_DEFINITION

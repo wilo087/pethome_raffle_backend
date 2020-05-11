@@ -1,4 +1,4 @@
-import { User, Context, isAuth} from '../../utils'
+import { User, Context} from '../../utils'
 
 /**
  * return all user
@@ -8,10 +8,8 @@ import { User, Context, isAuth} from '../../utils'
  * @param ctx 
  */
 function getUser(parent: object, args: User, ctx: Context): User {
-  const {prisma, request} = ctx
+  const {prisma} = ctx
   const {id} = args
-
-  isAuth(request)
 
   if(!id)
     return prisma.users.findMany()
@@ -31,10 +29,8 @@ function getUser(parent: object, args: User, ctx: Context): User {
  * @param ctx 
  */
 function getAllWinner(parent: object, args: User, ctx: Context): User {
-  const {prisma, request} = ctx
+  const {prisma} = ctx
     
-  isAuth(request)
-
   return prisma.users.findMany({
     where:{
       winner: 1
