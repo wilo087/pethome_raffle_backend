@@ -8,19 +8,19 @@ import { User, Context, isAuth} from '../../utils'
  * @param ctx 
  */
 function getUser(parent: object, args: User, ctx: Context): User {
-    const {prisma, request} = ctx
-    const {id} = args
+  const {prisma, request} = ctx
+  const {id} = args
 
-    isAuth(request)
+  isAuth(request)
 
-    if(!id)
-        return prisma.users.findMany()
+  if(!id)
+    return prisma.users.findMany()
    
-    return prisma.users.findOne({
-        where:{
-            id: Number(id)
-        }
-    })
+  return prisma.users.findOne({
+    where:{
+      id: Number(id)
+    }
+  })
 }
 
 /**
@@ -31,18 +31,18 @@ function getUser(parent: object, args: User, ctx: Context): User {
  * @param ctx 
  */
 function getAllWinner(parent: object, args: User, ctx: Context): User {
-    const {prisma, request} = ctx
+  const {prisma, request} = ctx
     
-    isAuth(request)
+  isAuth(request)
 
-    return prisma.users.findMany({
-        where:{
-            winner: 1
-        }
-    })
+  return prisma.users.findMany({
+    where:{
+      winner: 1
+    }
+  })
 }
 
 
 export const Query = {
-    getUser, getAllWinner
+  getUser, getAllWinner
 }

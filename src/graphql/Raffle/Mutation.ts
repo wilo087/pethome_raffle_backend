@@ -8,23 +8,23 @@ import bcrypt from 'bcrypt'
  * @param ctx 
  */
 async function createUser(parent: object, args: User, ctx: Context): Promise<User> {
-    const {prisma, request} = ctx
-    const {data} = args
+  const {prisma, request} = ctx
+  const {data} = args
     
-    isAuth(request)
+  isAuth(request)
 
-    try {
-        const userCreated =  await prisma.users.create({
-            data
-        })
+  try {
+    const userCreated =  await prisma.users.create({
+      data
+    })
 
-        return userCreated
-    }catch(e){
-        if(e.code === 'P2002')
-            throw Error(`El campo ${e.meta.targe} ya existe`)
+    return userCreated
+  }catch(e){
+    if(e.code === 'P2002')
+      throw Error(`El campo ${e.meta.targe} ya existe`)
         
-        throw Error ('Ocurrio un error')
-    }
+    throw Error ('Ocurrio un error')
+  }
    
 }
 
@@ -35,17 +35,17 @@ async function createUser(parent: object, args: User, ctx: Context): Promise<Use
  * @param ctx 
  */
 function updateUser(parent: object, args: User, ctx: Context): User {
-    const {prisma, request} = ctx
-    const {id, data} = args
+  const {prisma, request} = ctx
+  const {id, data} = args
 
-    isAuth(request)
+  isAuth(request)
 
-    return prisma.users.update({
-        where:{
-            id: Number(id)
-        },
-        data
-    })
+  return prisma.users.update({
+    where:{
+      id: Number(id)
+    },
+    data
+  })
 
 }
 
@@ -57,16 +57,16 @@ function updateUser(parent: object, args: User, ctx: Context): User {
  * @param ctx 
  */
 function deleteUser (parent: object, args: User, ctx: Context): User {
-    const {prisma, request} = ctx
-    const {id} = args
+  const {prisma, request} = ctx
+  const {id} = args
 
-    isAuth(request)
+  isAuth(request)
 
-    return prisma.users.delete({
-        where: {
-            id: Number(id)
-        }
-    })
+  return prisma.users.delete({
+    where: {
+      id: Number(id)
+    }
+  })
 }
 
 /**
@@ -77,24 +77,24 @@ function deleteUser (parent: object, args: User, ctx: Context): User {
  * @param ctx 
  */
 async function selectWinner(parent: object, args: User, ctx: Context): Promise<User> {
-    const {prisma, request} = ctx
+  const {prisma, request} = ctx
 
-    isAuth(request)
+  isAuth(request)
   
-    // Query to get user random
-    const userWinner: [User] = await prisma.raw<User>`SELECT *FROM users
+  // Query to get user random
+  const userWinner: [User] = await prisma.raw<User>`SELECT *FROM users
     WHERE winner = 0 
     ORDER BY RAND()
     LIMIT 1;`
 
-    return prisma.users.update({
-        where: {
-            id: Number(userWinner[0].id)
-        },
-        data:{
-            winner: 1
-        }
-    })
+  return prisma.users.update({
+    where: {
+      id: Number(userWinner[0].id)
+    },
+    data:{
+      winner: 1
+    }
+  })
 
 }
 
@@ -106,32 +106,32 @@ async function selectWinner(parent: object, args: User, ctx: Context): Promise<U
  * @param ctx 
  */
 async function login (parent: object, args: Auth, ctx: Context): Promise<object> {
-    const {user, password} = args.data
-    const {prisma} = ctx
+  const {user, password} = args.data
+  const {prisma} = ctx
   
 
-    const auth = await prisma.auth.findOne({
-        where:{
-            user
-        }
-    })
-
-    if(!auth || auth == null)
-        throw new Error('Invalid Credentials')
-  
-    const isAuth = await bcrypt.compare(password, auth.password)
-
-    if(!isAuth)
-        throw new Error('Invalid Credentials')
-
-    const token: string = generateToken(auth.user)
-    return {
-        token
+  const auth = await prisma.auth.findOne({
+    where:{
+      user
     }
+  })
+
+  if(!auth || auth == null)
+    throw new Error('Invalid Credentials')
+  
+  const isAuth = await bcrypt.compare(password, auth.password)
+
+  if(!isAuth)
+    throw new Error('Invalid Credentials')
+
+  const token: string = generateToken(auth.user)
+  return {
+    token
+  }
     
    
 }
 
 export const Mutation = {
-    createUser, updateUser, deleteUser, selectWinner, login
+  createUser, updateUser, deleteUser, selectWinner, login
 }

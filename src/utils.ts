@@ -46,7 +46,7 @@ export interface Option {
  * @param user 
  */
 export function generateToken ( user: string ): string {
-    return jwt.sign({user}, SECRET, {expiresIn: '24h'})
+  return jwt.sign({user}, SECRET, {expiresIn: '24h'})
 }
 
 /**
@@ -57,12 +57,12 @@ export function generateToken ( user: string ): string {
  */
 export function isAuth(req: any): string | object {
     
-    let token = req.request.headers.authorization
+  let token = req.request.headers.authorization
 
-    if(!token)
-        throw new Error('Unauthorized')
+  if(!token)
+    throw new Error('Unauthorized')
 
-    token = token.replace('Bearer', '')
-    const data = jwt.verify(token, SECRET)
-    return data
+  token = token.replace('Bearer', '')
+  const data = jwt.verify(token, SECRET)
+  return data
 }
