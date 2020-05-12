@@ -59,7 +59,7 @@ export function isAuth(token: string): string | object {
     throw new Error('Unauthorized');
   }
 
-  token = token.replace('Bearer', '');
+  token = token.replace('Bearer ', '');
 
-  return jwt.verify(token.trim(), SECRET);
+  return jwt.verify(token, SECRET);
 }
