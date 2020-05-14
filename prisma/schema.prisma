@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model auth {
+  id       Int    @default(autoincrement()) @id
+  password String
+  user     String @unique
+}
+
+model users {
+  cedula     Int       @unique
+  codigo     Int       @unique
+  created_at DateTime? @default(now())
+  id         Int       @default(autoincrement()) @id
+  nombre     String
+  winner     Int?      @default(0)
+}

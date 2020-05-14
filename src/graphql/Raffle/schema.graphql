@@ -1,0 +1,45 @@
+type User {
+    id: ID!
+    nombre: String!
+    codigo: Int!
+    cedula: Int!
+}
+
+type AuthPayload {
+    token: String!
+}
+
+input inputLogin {
+    user: String!
+    password: String!
+}
+
+type Query {
+  getUser(id: ID): [User!]! @isAuthenticated
+  getAllWinner: [User!]! @isAuthenticated
+}
+
+
+type Mutation {
+    createUser(data: createUserInput!): User! @isAuthenticated
+    updateUser(id: ID! data: updateUserInput!): User! @isAuthenticated
+    deleteUser(id: ID!): User! @isAuthenticated
+    selectWinner: User! @isAuthenticated
+    login(data: inputLogin!): AuthPayload!
+}
+
+
+input createUserInput {
+    nombre: String!
+    codigo: Int!
+    cedula: Int!
+}
+
+
+input updateUserInput {
+    nombre: String
+    codigo: Int
+    cedula: Int
+}
+
+directive @isAuthenticated on QUERY | FIELD | FIELD_DEFINITION

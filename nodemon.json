@@ -1,0 +1,5 @@
+{
+    "exec": "yarn ts",
+    "watch" : ["src/**"],
+    "ext": "ts, graphql, prisma"
+}

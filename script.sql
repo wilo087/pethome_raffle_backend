@@ -1,0 +1,20 @@
+CREATE DATABASE pethome_raffle;
+
+use pethome_raffle;
+
+
+CREATE TABLE users (
+ id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+ nombre VARCHAR(100) NOT NULL,
+ cedula INT(11) NOT NULL UNIQUE,
+ codigo INT (11) NOT NULL UNIQUE,
+ winner INT(11) DEFAULT 0,
+ created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+
+create table auth (
+ id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+ user VARCHAR(100) NOT NULL UNIQUE,
+ password VARCHAR(100) NOT NULL
+);
