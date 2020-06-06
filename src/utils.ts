@@ -5,8 +5,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 export const prisma = new PrismaClient();
-const SECRET: string  = process.env.SECRET_JWT as string;
+const SECRET: string  = process.env.SECRET_JWT || '';
 
+console.log(SECRET)
 export interface Request {
   get(param: string): string;
 }
@@ -43,7 +44,7 @@ export interface Option {
 
 /**
  * return jwt token
- * @param user 
+ * @param user
  */
 export function generateToken(user: string): string {
   return jwt.sign({ user }, SECRET, { expiresIn: '24h' });
@@ -59,7 +60,5 @@ export function isAuth(token: string): string | object {
     throw new Error('Unauthorized');
   }
 
-  token = token.replace('Bearer ', '');
-
-  return jwt.verify(token, SECRET);
+  return jwt.verify(token.replace('Bearer ', ''), SECRET);
 }

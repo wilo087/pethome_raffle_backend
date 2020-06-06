@@ -8,15 +8,15 @@ const options: Option = {
   port: Number(process.env.GRAPHQL_PORT),
   endpoint: process.env.GRAPHQL_ENDPOINT || '/graphql' ,
   playground: process.env.GRAPHQL_PLAYGROUND || '/playground',
-  debug: Boolean(process.env.DEBUG) || false
-}
+  debug: Boolean(process.env.DEBUG) || false,
+};
 
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   schemaDirectives: {
-    isAuthenticated: IsAuthenticatedDirective
+    isAuthenticated: IsAuthenticatedDirective,
   },
   context: (request): object => ({ request, prisma }),
 });

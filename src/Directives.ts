@@ -2,9 +2,9 @@ import { AuthenticationError, SchemaDirectiveVisitor } from 'apollo-server';
 import { defaultFieldResolver, GraphQLField } from 'graphql';
 import { isAuth } from './utils';
 
-export class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
-  public visitFieldDefinition(field: GraphQLField<CallableFunction, CallableFunction>): 
-   GraphQLField<CallableFunction, CallableFunction> | void {
+class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
+  public visitFieldDefinition(field: GraphQLField<CallableFunction, CallableFunction>):
+    GraphQLField<CallableFunction, CallableFunction> | void {
 
     const originalResolve = field.resolve || defaultFieldResolver;
 
@@ -21,4 +21,4 @@ export class IsAuthenticatedDirective extends SchemaDirectiveVisitor {
   }
 }
 
-export default IsAuthenticatedDirective
+export default IsAuthenticatedDirective;
