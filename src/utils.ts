@@ -7,7 +7,6 @@ dotenv.config();
 export const prisma = new PrismaClient();
 const SECRET: string  = process.env.SECRET_JWT || '';
 
-console.log(SECRET)
 export interface Request {
   get(param: string): string;
 }
