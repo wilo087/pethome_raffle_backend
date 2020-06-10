@@ -3,6 +3,11 @@ import { types as typeDefs, resolvers } from './graphql';
 import { prisma, Option, errorName, formatErr } from './utils';
 import IsAuthenticatedDirective from './Directives';
 
+
+process.on('unhandledRejection', (reason, promise): void => {
+  console.log(`reason: ${reason}, promise: ${promise}`);
+});
+
 const options: Option = {
   port: Number(process.env.GRAPHQL_PORT),
   endpoint: process.env.GRAPHQL_ENDPOINT || '/graphql',

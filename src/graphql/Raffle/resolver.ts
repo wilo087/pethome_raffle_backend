@@ -20,7 +20,7 @@ export default {
       }
     },
 
-    getAllWinner(_: void, args: User, ctx: Context): User {
+    getAllWinner(_: void, args: void, ctx: Context): User {
       const { prisma } = ctx;
       try {
         return prisma.users.findMany({ where: { winner: 1 } });
@@ -82,12 +82,11 @@ export default {
     },
 
 
-    async selectWinner(_: void, args: User, ctx: Context): Promise<User> {
+    async selectWinner(_: void, args: void, ctx: Context): Promise<User> {
       const { prisma } = ctx;
 
-      // Query to get user random
       try {
-
+        // Query to get user random
         const userWinner: [User] = await prisma.raw<User>`SELECT *FROM users
           WHERE winner = 0
           ORDER BY RAND()
