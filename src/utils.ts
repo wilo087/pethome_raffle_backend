@@ -2,9 +2,22 @@ import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
+// TODO
+const formatError = require('easygraphql-format-error');
+
+export const formatErr = new formatError([{
+  name: 'EXISTS',
+  message: 'User exists',
+  statusCode: '409',
+}]);
+// pass the errorName on the context
+export const errorName = formatErr.errorName;
+
 dotenv.config();
 
-export const prisma = new PrismaClient();
+export const prisma = new PrismaClient({
+  errorFormat: 'minimal',
+});
 const SECRET: string  = process.env.SECRET_JWT || '';
 
 export interface Request {
@@ -24,6 +37,7 @@ export interface User {
 export interface Context {
   prisma: any;
   request: Request;
+  errorName?: any;
 }
 
 

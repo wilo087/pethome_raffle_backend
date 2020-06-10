@@ -3,8 +3,8 @@ import path from 'path';
 
 let extensionFiles: string = '.ts';
 
-if (process.env.NODE_ENV === 'producction') {
-    extensionFiles = '.js';
+if (process.env.NODE_ENV === 'production') {
+  extensionFiles = '.js';
 }
 
 const typesArray: string[] = fileLoader(path.join(__dirname, '/**/*.graphql'));

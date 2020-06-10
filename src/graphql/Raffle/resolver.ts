@@ -33,11 +33,21 @@ export default {
   Mutation: {
 
     createUser(_: void, args: User, ctx: Context): User {
-      const { prisma } = ctx;
-      const { data } = args;
+      const { prisma, errorName } = ctx;
+      const { data, codigo } = args;
 
       try {
+
+        const user : User = prisma.users.findMany({
+          where: codigo ,
+        });
+
+        if (user) {
+          throw new Error(errorName.EXISTS);
+        }
+
         return prisma.users.create({ data });
+
       } catch (e) {
         throw e;
       }
@@ -96,19 +106,19 @@ export default {
 
     async login(_: void, args: Auth, ctx: Context): Promise<{ token: string }> {
       const { user, password } = args.data;
-      const { prisma } = ctx;
+      const { prisma, errorName } = ctx;
 
       try {
         const auth = await prisma.auth.findOne({ where: { user } });
 
         if (!auth) {
-          throw new AuthenticationError('Invalid Credentials');
+          throw new AuthenticationError(errorName.UNAUTHORIZED);
         }
 
         const isAuth = await bcrypt.compare(password, auth.password);
 
         if (!isAuth) {
-          throw new AuthenticationError('Invalid Credentials');
+          throw new AuthenticationError(errorName.UNAUTHORIZED);
         }
 
         const token: string = generateToken(auth.user);
