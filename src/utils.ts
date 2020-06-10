@@ -30,7 +30,7 @@ export interface User {
   nombre: string;
   codigo: number;
   cedula: number;
-  data?: User;
+  data: User;
 }
 
 
@@ -43,7 +43,7 @@ export interface Context {
 
 export interface Auth {
   data: {
-    user: string;
+    username: string;
     password: string;
   };
 }

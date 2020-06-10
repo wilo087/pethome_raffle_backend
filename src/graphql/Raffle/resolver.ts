@@ -32,17 +32,16 @@ export default {
 
   Mutation: {
 
-    createUser(_: void, args: User, ctx: Context): User {
+    async createUser(_: void, args: User, ctx: Context): Promise<User> {
       const { prisma, errorName } = ctx;
-      const { data, codigo } = args;
+      const { data } = args;
 
       try {
-
-        const user : User = prisma.users.findMany({
-          where: codigo ,
+        const user: User[] = await prisma.users.findMany({
+          where: { codigo: data.codigo },
         });
 
-        if (user) {
+        if (user.length > 0) {
           throw new Error(errorName.EXISTS);
         }
 
@@ -82,14 +81,14 @@ export default {
     },
 
 
-    async selectWinner(_: void, args: void, ctx: Context): Promise<User> {
+    async selectWinner(_: void, args: void, ctx: Context) {
       const { prisma } = ctx;
 
       try {
         // Query to get user random
-        const userWinner: [User] = await prisma.raw<User>`SELECT *FROM users
+        const userWinner: User[] = await prisma.raw<User>`SELECT *FROM users
           WHERE winner = 0
-          ORDER BY RAND()
+          ORDER BY random()
           LIMIT 1;`;
 
         return prisma.users.update({
@@ -104,11 +103,11 @@ export default {
     },
 
     async login(_: void, args: Auth, ctx: Context): Promise<{ token: string }> {
-      const { user, password } = args.data;
+      const { username, password } = args.data;
       const { prisma, errorName } = ctx;
 
       try {
-        const auth = await prisma.auth.findOne({ where: { user } });
+        const auth = await prisma.auth.findOne({ where: { username } });
 
         if (!auth) {
           throw new AuthenticationError(errorName.UNAUTHORIZED);
@@ -120,7 +119,7 @@ export default {
           throw new AuthenticationError(errorName.UNAUTHORIZED);
         }
 
-        const token: string = generateToken(auth.user);
+        const token: string = generateToken(auth.username);
         return { token };
 
       } catch (e) {

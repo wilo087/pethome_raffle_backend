@@ -13,4 +13,4 @@ COPY . .
 
 RUN yarn install 
 
-CMD ["yarn", "prod"]
+CMD ["yarn", "build"]
