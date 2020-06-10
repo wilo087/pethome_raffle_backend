@@ -11,6 +11,9 @@ RUN apk add build-base \
 
 COPY . .
 
-RUN yarn install 
+RUN yarn install
+RUN yarn remove \
+   compile \
+   copy-gql 
 
-CMD ["yarn", "build"]
+CMD ["yarn", "server"]

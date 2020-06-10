@@ -20,7 +20,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-     - ./scripts/script.sql:/docker-entrypoint-initdb.d/script.sql
+     - ./script.sql:/docker-entrypoint-initdb.d/script.sql
      - ./postgres-data:/var/lib/postgresql/data
    
   webserver:
@@ -28,7 +28,7 @@ services:
     container_name: webserver
     restart: unless-stopped
     volumes:
-      - ./nginx-conf:/etc/nginx/conf.d
+      - ./nginx:/etc/nginx/conf.d
     depends_on:
       - pethome_raffle
     ports: 
@@ -39,3 +39,4 @@ services:
 networks:
   app-network:
     driver: bridge
+    
