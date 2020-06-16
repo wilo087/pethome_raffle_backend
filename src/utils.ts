@@ -1,3 +1,5 @@
+
+import { AuthenticationError } from 'apollo-server';
 import { PrismaClient } from '@prisma/client';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
@@ -27,9 +29,9 @@ export interface Request {
 
 export interface User {
   id?: number;
-  nombre: string;
-  codigo: number;
-  cedula: number;
+  name: string;
+  code: number;
+  identificationCard: number;
   data: User;
 }
 
@@ -70,7 +72,7 @@ export function generateToken(user: string): string {
 export function isAuth(token: string): string | object {
 
   if (!token) {
-    throw new Error('Unauthorized');
+    throw new AuthenticationError('Unauthorized');
   }
 
   return jwt.verify(token.replace('Bearer ', ''), SECRET);

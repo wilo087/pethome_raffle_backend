@@ -1,5 +1,5 @@
 import { User, Context, generateToken, Auth } from '../../utils';
-import { AuthenticationError } from 'apollo-server';
+import { AuthenticationError, ApolloError } from 'apollo-server';
 import bcrypt from 'bcrypt';
 
 export default {
@@ -33,16 +33,16 @@ export default {
   Mutation: {
 
     async createUser(_: void, args: User, ctx: Context): Promise<User> {
-      const { prisma, errorName } = ctx;
+      const { prisma } = ctx;
       const { data } = args;
 
       try {
         const user: User[] = await prisma.users.findMany({
-          where: { codigo: data.codigo },
+          where: { code: data.code },
         });
 
         if (user.length > 0) {
-          throw new Error(errorName.EXISTS);
+          throw new ApolloError('code exists', 'CONFLIT');
         }
 
         return prisma.users.create({ data });
@@ -104,19 +104,19 @@ export default {
 
     async login(_: void, args: Auth, ctx: Context): Promise<{ token: string }> {
       const { username, password } = args.data;
-      const { prisma, errorName } = ctx;
+      const { prisma } = ctx;
 
       try {
         const auth = await prisma.auth.findOne({ where: { username } });
 
         if (!auth) {
-          throw new AuthenticationError(errorName.UNAUTHORIZED);
+          throw new AuthenticationError('Unauthorized');
         }
 
         const isAuth = await bcrypt.compare(password, auth.password);
 
         if (!isAuth) {
-          throw new AuthenticationError(errorName.UNAUTHORIZED);
+          throw new AuthenticationError('Unauthorized');
         }
 
         const token: string = generateToken(auth.username);

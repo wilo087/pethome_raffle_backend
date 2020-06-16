@@ -1,8 +1,8 @@
 type User {
     id: ID!
-    nombre: String!
-    codigo: Int!
-    cedula: Int!
+    name: String!
+    code: Int!
+    identificationCard: String!
 }
 
 type AuthPayload {
@@ -21,7 +21,7 @@ type Query {
 
 
 type Mutation {
-    createUser(data: createUserInput!): User! @isAuthenticated
+    createUser(data: createUserInput!): User! #@isAuthenticated
     updateUser(id: ID! data: updateUserInput!): User! @isAuthenticated
     deleteUser(id: ID!): User! @isAuthenticated
     selectWinner: User! @isAuthenticated
@@ -30,16 +30,16 @@ type Mutation {
 
 
 input createUserInput {
-    nombre: String!
-    codigo: Int!
-    cedula: Int!
+    name: String!
+    code: Int!
+    identificationCard: String!
 }
 
 
 input updateUserInput {
-    nombre: String
-    codigo: Int
-    cedula: Int
+    name: String
+    code: Int
+    identificationCard: String
 }
 
 directive @isAuthenticated on QUERY | FIELD | FIELD_DEFINITION

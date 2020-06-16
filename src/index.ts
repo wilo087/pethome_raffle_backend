@@ -22,7 +22,7 @@ const server: ApolloServer = new ApolloServer({
   schemaDirectives: {
     isAuthenticated: IsAuthenticatedDirective,
   },
-  context: (request): object => ({ request, prisma, errorName }),
+  context: (request): object => ({ request, prisma }),
   formatError: (err) => {
     console.error(err);
     return formatErr.getError(err);
