@@ -21,7 +21,7 @@ type Query {
 
 
 type Mutation {
-    createUser(data: createUserInput!): User! #@isAuthenticated
+    createUser(data: createUserInput!): User! @isAuthenticated
     updateUser(id: ID! data: updateUserInput!): User! @isAuthenticated
     deleteUser(id: ID!): User! @isAuthenticated
     selectWinner: User! @isAuthenticated

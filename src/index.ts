@@ -1,8 +1,9 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer, ApolloError } from 'apollo-server';
+import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { types as typeDefs, resolvers } from './graphql';
-import { prisma, Option, errorName, formatErr } from './utils';
+import { prisma, Option } from './utils';
+import { v4 } from 'uuid';
 import IsAuthenticatedDirective from './Directives';
-
 
 process.on('unhandledRejection', (reason, promise): void => {
   console.log(`reason: ${reason}, promise: ${promise}`);
@@ -15,7 +16,6 @@ const options: Option = {
   debug: process.env.NODE_ENV === 'production',
 };
 
-
 const server: ApolloServer = new ApolloServer({
   typeDefs,
   resolvers,
@@ -23,9 +23,17 @@ const server: ApolloServer = new ApolloServer({
     isAuthenticated: IsAuthenticatedDirective,
   },
   context: (request): object => ({ request, prisma }),
-  formatError: (err) => {
-    console.error(err);
-    return formatErr.getError(err);
+  formatError: (err: GraphQLError): GraphQLFormattedError => {
+    if (err.originalError instanceof ApolloError) {
+      console.info(err);
+      return err;
+    }
+
+    const errorId = v4();
+    console.log(`ErrorID ${errorId}`);
+    console.log(err);
+
+    return new GraphQLError(`Internal Server Error: ${errorId}`);
   },
   introspection: true,
   playground: true,
