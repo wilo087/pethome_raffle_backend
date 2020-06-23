@@ -86,8 +86,13 @@ export default {
       const { prisma } = ctx;
 
       try {
+        const winner = await prisma.users.findMany({ where: { winner: 1 } });
+
+        if (winner.length > 0) {
+          return winner[0];
+        }
         // Query to get user random
-        const userWinner: User[] = await prisma.raw<User>`SELECT *FROM users
+        const userWinner: User[] = await  prisma.queryRaw<User>`SELECT *FROM users
           WHERE winner = 0
           ORDER BY random()
           LIMIT 1;`;

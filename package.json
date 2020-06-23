@@ -16,7 +16,7 @@
     "build": "npm-run-all remove compile copy-gql server"
   },
   "dependencies": {
-    "@prisma/client": "^2.0.0-beta.3",
+    "@prisma/client": "^2.0.0-beta.5",
     "apollo-server": "^2.13.0",
     "bcrypt": "^4.0.1",
     "dotenv": "^8.2.0",
