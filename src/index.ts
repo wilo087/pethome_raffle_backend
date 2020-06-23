@@ -1,8 +1,9 @@
 import { ApolloServer, ApolloError } from 'apollo-server';
 import { GraphQLError, GraphQLFormattedError } from 'graphql';
+import { v4 } from 'uuid';
+
 import { types as typeDefs, resolvers } from './graphql';
 import { prisma, Option } from './utils';
-import { v4 } from 'uuid';
 import IsAuthenticatedDirective from './Directives';
 
 process.on('unhandledRejection', (reason, promise): void => {

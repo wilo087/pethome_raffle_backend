@@ -1,6 +1,7 @@
-import { User, Context, generateToken, Auth } from '../../utils';
 import { AuthenticationError, ApolloError } from 'apollo-server';
 import bcrypt from 'bcrypt';
+
+import { User, Context, generateToken, Auth } from '../../utils';
 
 export default {
   Query: {
