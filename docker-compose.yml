@@ -1,0 +1,42 @@
+version: "3.7"
+services:
+  pethome_raffle:
+    networks:
+     - app-network
+    volumes:
+     - .:/usr/src/app
+    build: .
+    container_name: pethome_raffle
+    image: pethome/pethome_raffle
+    depends_on:
+      - postgres
+    ports:
+      - "5000:5000"
+      
+  postgres:
+    image: postgres:11.2-alpine
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+     - ./script.sql:/docker-entrypoint-initdb.d/script.sql
+     - ./postgres-data:/var/lib/postgresql/data
+   
+  webserver:
+    image: nginx:mainline-alpine
+    container_name: webserver
+    restart: unless-stopped
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - pethome_raffle
+    ports: 
+      - "80:80"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+    

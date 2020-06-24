@@ -1,0 +1,28 @@
+{
+  "extends": "tslint-config-airbnb",
+  "linterOptions": {
+    "exclude": [
+      "node_modules",
+      "dist"
+    ]
+  },
+  "rules": {
+    "max-line-length": {
+      "options": [
+        88
+      ]
+    },
+    "new-parens": true,
+    "no-arg": true,
+    "no-conditional-assignment": true,
+    "no-consecutive-blank-lines": false,
+    "import-name": false
+  },
+  "jsRules": {
+    "max-line-length": {
+      "options": [
+        88
+      ]
+    }
+  }
+}
