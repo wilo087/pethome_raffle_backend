@@ -1,6 +1,5 @@
 CREATE DATABASE pethome_raffle;
 
-
 CREATE TABLE users (
  id SERIAL PRIMARY KEY NOT NULL, 
  name VARCHAR(100) NOT NULL,
@@ -10,10 +9,8 @@ CREATE TABLE users (
  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-
 create table auth (
  id SERIAL PRIMARY KEY NOT NULL, 
  username VARCHAR(100) NOT NULL UNIQUE,
  password VARCHAR(100) NOT NULL
 );
-
