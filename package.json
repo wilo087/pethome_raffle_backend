@@ -1,45 +1,26 @@
 {
-  "name": "pethome_raffle_backend",
+  "name": "pethomerd-raffle-backend",
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:AdrianMendez1199/pethome_raffle_backend.git",
-  "author": "Adrian Mendez <mendezadrian149@gmail.com>",
-  "license": "MIT",
+  "description": "PetHomeRD Raffle Backend",
+  "main": "src/server.js",
+  "author": "Wilowayne De La Cruz G. <wilo0087@gmail.com>",
+  "license": "MIT Wilowayne De La Cruz",
+  "private": true,
   "scripts": {
-    "lint": "tslint --project .",
-    "remove": "rm -rf dist",
-    "copy-gql": "cp ./src/graphql/Raffle/schema.graphql ./dist/graphql/Raffle",
-    "compile": "tsc",
-    "server": "NODE_ENV=production node ./dist/index.js",
-    "ts": "ts-node ./src/index.ts",
-    "dev": "NODE_ENV=development nodemon",
-    "build": "npm-run-all remove compile copy-gql server"
+    "start": "yarn babel-node src/",
+    "start:dev": "nodemon --exec babel-node src/",
+    "test": "yarn jest"
   },
   "dependencies": {
-    "@prisma/client": "2.0.0-beta.5",
-    "apollo-server": "2.13.0",
-    "bcrypt": "4.0.1",
-    "dotenv": "8.2.0",
-    "graphql": "15.0.0",
-    "jsonwebtoken": "8.5.1",
-    "merge-graphql-schemas": "1.7.8",
-    "uuid": "8.1.0"
+    "express": "^4.17.1"
   },
   "devDependencies": {
-    "@prisma/cli": "2.0.0",
-    "@types/bcrypt": "3.0.0",
-    "@types/jsonwebtoken": "8.3.9",
-    "@types/node": "13.13.2",
-    "@types/uuid": "8.0.0",
-    "@types/ws": "7.2.4",
-    "@typescript-eslint/eslint-plugin": "2.29.0",
-    "@typescript-eslint/parser": "2.29.0",
-    "nodemon": "2.0.3",
-    "npm-run-all": "4.1.5",
-    "ts-node": "8.9.0",
-    "tslint": "6.1.2",
-    "tslint-config-airbnb": "5.11.2",
-    "typescript": "3.8.3",
-    "webpack-graphql-loader": "1.0.2"
+    "@babel/core": "^7.10.3",
+    "@babel/node": "^7.10.3",
+    "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/plugin-proposal-export-namespace-from": "^7.10.1",
+    "@babel/plugin-proposal-throw-expressions": "^7.10.1",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+    "babel-jest": "^24.3.1"
   }
 }
