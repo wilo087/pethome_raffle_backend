@@ -1,5 +1,7 @@
 import express from 'express';
 
+import db from './models';
+
 const app = express();
 const port = process.env.SERVER_PORT || 3000;
 const winner = {
