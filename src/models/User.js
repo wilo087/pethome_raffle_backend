@@ -1,9 +1,9 @@
 'use strict';
-var cryp = require('crypto');
+
+import cryp from 'crypto';
 
 module.exports = function (sequelize, DataTypes) {
-
-  var User = sequelize.define('User', {
+  const User = sequelize.define('User', {
     email: {
       type: DataTypes.STRING(50),
       allowNull: false,
