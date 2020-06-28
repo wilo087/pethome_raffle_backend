@@ -7,7 +7,7 @@
   "license": "MIT Wilowayne De La Cruz",
   "private": true,
   "scripts": {
-    "start": "yarn babel-node src/",
+    "start": "ENV=production yarn babel-node src/",
     "start:dev": "yarn nodemon --exec babel-node src/",
     "test": "yarn jest"
   },
