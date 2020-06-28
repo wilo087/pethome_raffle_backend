@@ -13,7 +13,7 @@ cp .env.example .env
 
 Run the app
 ```sh
-# Producction
+# Production
 yarn start
 
 # Development
