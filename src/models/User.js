@@ -4,40 +4,23 @@ import cryp from 'crypto';
 
 module.exports = function (sequelize, DataTypes) {
   const User = sequelize.define('User', {
-    email: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-      unique: true,
-      validate: {
-        isEmail: { msg: "Please enter a valid email addresss" }
-      },
-      isEmail: true
-    },
-    password_hash: { type: DataTypes.STRING(80), allowNull: false },
-    password: {
-      type: DataTypes.VIRTUAL,
-      set: function (val) {
-        //this.setDataValue('password', val); // Remember to set the data value, otherwise it won't be validated
-        this.setDataValue('password_hash', cryp.createHash("md5").update(val).digest("hex"));
-      },
-      validate: {
-        isLongEnough: function (val) {
-          if (val.length < 8) {
-            throw new Error("Please choose a longer password");
-          }
-        }
-      }
-    },
-    role: {
-      type: DataTypes.INTEGER,
+    name: {
+      type: DataTypes.STRING(60),
       allowNull: false
     },
-    active: {
-      type: DataTypes.INTEGER,
+    document: {
+      type: DataTypes.STRING(11),
+      allowNull: false
+    },
+    code: {
+      type: DataTypes.INTEGER(4),
+      allowNull: false
+    },
+    won: {
+      type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: 1
-    }
-
+      defaultValue: false
+    },
   }, {
     classMethods: {
       associate: function (models) {

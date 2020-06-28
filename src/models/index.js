@@ -1,9 +1,9 @@
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
+import { Sequelize, DataTypes } from 'sequelize';
 
-const fs = require('fs');
-const path = require('path');
-const { Sequelize, DataTypes } = require('sequelize');
-
+import users from '../seeds/Users';
 const filebasename = path.basename(__filename);
 const db = {};
 
@@ -14,6 +14,7 @@ const { DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_FORCE_RESTART } = process.env;
 const config = {
   host: DB_HOST,
   dialect: 'mysql',
+  logging: process.env.ENV === 'production' ? false : console.log,
   dialectOptions: {
     charset: 'utf8',
   }
@@ -44,14 +45,16 @@ Object.keys(db).forEach((modelName) => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-const sequelizeOptions = { logging: console.log, };
+const sequelizeOptions = { logging: config.logging, };
 
 // Removes all tables and recreates them (only available if env is not in production)
 if (DB_FORCE_RESTART === 'true' && process.env.ENV !== 'production') {
   sequelizeOptions.force = true;
 }
 
-sequelize.sync(sequelizeOptions)
+sequelize.sync(sequelizeOptions).then(async () => {
+  await db.User.bulkCreate(users)
+})
   .catch((err) => {
     console.log(err);
     process.exit();
