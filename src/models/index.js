@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import { CLIENT_RENEG_LIMIT } from 'tls';
+
 const fs = require('fs');
 const path = require('path');
 const { Sequelize, DataTypes } = require('sequelize');
@@ -9,7 +9,7 @@ const db = {};
 
 // Get env var from .env
 dotenv.config()
-const { DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_FORCE_RESTART} = process.env;
+const { DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_FORCE_RESTART } = process.env;
 
 const config = {
   host: DB_HOST,
