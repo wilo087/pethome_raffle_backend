@@ -53,7 +53,7 @@ if (DB_FORCE_RESTART === 'true' && process.env.ENV !== 'production') {
 }
 
 sequelize.sync(sequelizeOptions).then(async () => {
-  await db.User.bulkCreate(users)
+  // await db.User.bulkCreate(users)
 })
   .catch((err) => {
     console.log(err);
