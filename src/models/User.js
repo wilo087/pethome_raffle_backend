@@ -10,7 +10,11 @@ module.exports = function (sequelize, DataTypes) {
     },
     document: {
       type: DataTypes.STRING(11),
-      allowNull: false
+      allowNull: true
+    },
+    phone: {
+      type: DataTypes.STRING(60),
+      allowNull: true
     },
     code: {
       type: DataTypes.INTEGER(4),
@@ -35,7 +39,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
 
-    timestamps: true,
+    timestamps: false,
 
     // don't delete database entries but set the newly added attribute deletedAt
     // to the current date (when deletion was done). paranoid will only work if
